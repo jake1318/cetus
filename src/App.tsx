@@ -1,23 +1,29 @@
-import React from "react";
+// src/App.tsx
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SuiClientProvider, WalletProvider } from "@mysten/dapp-kit";
+import {
+  createNetworkConfig,
+  SuiClientProvider,
+  WalletProvider,
+} from "@mysten/dapp-kit";
+import { getFullnodeUrl } from "@mysten/sui/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Swap from "./pages/swap";
+import Swap from "./pages/swap"; // Your main app component
 import "./App.css";
 
-// Network configuration (update if needed)
-const networkConfig = {
-  testnet: { url: "https://fullnode.testnet.sui.io" },
-  mainnet: { url: "https://fullnode.mainnet.sui.io" },
-};
+// Create network configurations using getFullnodeUrl from the Sui SDK.
+const { networkConfig } = createNetworkConfig({
+  localnet: { url: getFullnodeUrl("localnet") },
+  mainnet: { url: getFullnodeUrl("mainnet") },
+});
 
-// Create a QueryClient instance for React Query.
+// Create a QueryClient instance.
 const queryClient = new QueryClient();
 
-const App: React.FC = () => {
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networkConfig} defaultNetwork="testnet">
+      <SuiClientProvider networks={networkConfig} defaultNetwork="mainnet">
         <WalletProvider autoConnect>
           <Router>
             <Routes>
@@ -28,6 +34,6 @@ const App: React.FC = () => {
       </SuiClientProvider>
     </QueryClientProvider>
   );
-};
+}
 
 export default App;
