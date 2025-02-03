@@ -9,7 +9,7 @@ import { JsonRpcProvider } from "@mysten/sui";
 import { fetchPoolData, buildSwapTransaction } from "../services/suiSwap";
 import { TOKENS } from "../config/tokens";
 import { POOLS } from "../config/constants";
-import "./Swap.css";
+import "./swap.css";
 
 // Helper function: Convert a Uint8Array to a hex string.
 const toHexString = (byteArray: Uint8Array): string =>
