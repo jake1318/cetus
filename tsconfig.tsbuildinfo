@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/config/constants.ts","./src/config/tokens.ts","./src/lib/publickeyshim.ts","./src/lib/sui.ts","./src/pages/swap.tsx","./src/services/suiswap.ts","./src/types/mysten-sui.d.ts"],"version":"5.6.3"}
