@@ -1,42 +1,78 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Basic global styles */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f9f9fa;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Header styling */
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ddd;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Swap form container */
+.swap-container {
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Swap form elements */
+.swap-form {
+  display: flex;
+  flex-direction: column;
 }
 
-.card {
-  padding: 2em;
+.swap-form label {
+  margin: 0.5rem 0 0.25rem;
+  font-weight: 500;
 }
 
-.read-the-docs {
-  color: #888;
+.swap-input,
+.swap-select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.swap-select {
+  background-color: #fafafa;
+}
+
+/* Swap button styles */
+.swap-button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #007aff; /* blue primary button */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.swap-button:disabled {
+  background-color: #007aff;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Status and error messages */
+.status-message {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+.status-success {
+  color: #2e7d32; /* green text for success */
+}
+.status-error {
+  color: #d32f2f; /* red text for errors */
 }

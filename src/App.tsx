@@ -1,38 +1,29 @@
-// src/App.tsx
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import {
-  createNetworkConfig,
-  SuiClientProvider,
-  WalletProvider,
-} from "@mysten/dapp-kit";
-import { getFullnodeUrl } from "@mysten/sui/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Swap from "./pages/swap"; // Your main app component
-import "./App.css";
-
-// Create network configurations using getFullnodeUrl from the Sui SDK.
-const { networkConfig } = createNetworkConfig({
-  localnet: { url: getFullnodeUrl("localnet") },
-  mainnet: { url: getFullnodeUrl("mainnet") },
-});
-
-// Create a QueryClient instance.
-const queryClient = new QueryClient();
+import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { Box } from "@radix-ui/themes"; // (Optional: If using Radix UI for layout, otherwise remove)
+import Swap from "./components/swap";
 
 function App() {
+  const account = useCurrentAccount();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networkConfig} defaultNetwork="mainnet">
-        <WalletProvider autoConnect>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Swap />} />
-            </Routes>
-          </Router>
-        </WalletProvider>
-      </SuiClientProvider>
-    </QueryClientProvider>
+    <div className="App">
+      {/* Header with Connect Wallet button */}
+      <header className="header">
+        <ConnectButton />{" "}
+        {/* Sui dApp Kit's wallet connect button&#8203;:contentReference[oaicite:9]{index=9} */}
+      </header>
+
+      {/* If wallet connected, show swap form; otherwise prompt to connect */}
+      {account ? (
+        <div className="swap-container">
+          <Swap />
+        </div>
+      ) : (
+        <div className="swap-container">
+          <p>Please connect your Sui wallet to use the swap application.</p>
+        </div>
+      )}
+    </div>
   );
 }
 
