@@ -1,9 +1,25 @@
 import { CetusClmmSDK } from "@cetusprotocol/cetus-sui-clmm-sdk";
-import { SuiClient, getFullnodeUrl } from "@mysten/sui/client";
+import { JsonRpcProvider } from "@mysten/sui/client";
 
 // Network can be "mainnet", "testnet", or "devnet"
 const NETWORK = "mainnet";
-const suiClient = new SuiClient({ url: getFullnodeUrl(NETWORK) });
+
+// Define the RPC URL based on the network
+const getRpcUrl = (network: string) => {
+  switch (network) {
+    case "mainnet":
+      return "https://fullnode.mainnet.sui.io";
+    case "testnet":
+      return "https://fullnode.testnet.sui.io";
+    case "devnet":
+      return "https://fullnode.devnet.sui.io";
+    default:
+      return "https://fullnode.mainnet.sui.io";
+  }
+};
+
+// Create the provider
+const provider = new JsonRpcProvider(getRpcUrl(NETWORK));
 
 // Package IDs for Cetus on mainnet
 const CETUS_CONFIG = {
@@ -22,7 +38,7 @@ const CETUS_CONFIG = {
 export const initCetusSDK = () => {
   return new CetusClmmSDK({
     network: NETWORK,
-    fullNode: getFullnodeUrl(NETWORK),
+    fullNode: getRpcUrl(NETWORK),
     faucet: "",
     simulationAccount: {
       address:
@@ -37,4 +53,4 @@ export const initCetusSDK = () => {
   });
 };
 
-export const getSuiClient = () => suiClient;
+export const getSuiProvider = () => provider;

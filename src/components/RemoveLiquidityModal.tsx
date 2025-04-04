@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Modal } from "./Modal";
 import { useCetusSdk } from "../hooks/useCetusSdk";
 import { useWallet } from "../hooks/useWallet";
-import { TransactionBlock } from "@mysten/sui/transactions";
-import "./Modal.scss";
+import { useSignAndExecuteTransactionBlock } from "@suiet/wallet-kit";
+import "./RemoveLiquidityModal.scss";
 
 interface RemoveLiquidityModalProps {
   poolAddress: string;
