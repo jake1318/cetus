@@ -23,12 +23,13 @@ export const PoolList = ({
       if (!sdk) return;
 
       try {
+        // Get a paginated list of pool addresses
         const poolsData = await sdk.Pool.getPoolsWithPage(0, 100);
         setPools(poolsData.poolAddresses || []);
 
-        // Fetch details for each pool
+        // Fetch details for each pool (limit to first 10 for performance)
         const details = await Promise.all(
-          poolsData.poolAddresses.slice(0, 10).map(async (address) => {
+          poolsData.poolAddresses.slice(0, 10).map(async (address: string) => {
             try {
               return await sdk.Pool.getPool(address);
             } catch (e) {
@@ -38,7 +39,7 @@ export const PoolList = ({
           })
         );
 
-        const validDetails = details.filter(Boolean);
+        const validDetails = details.filter((detail) => detail !== null);
         setPoolDetails(validDetails);
         setFilteredPools(validDetails);
       } catch (err) {
@@ -62,7 +63,6 @@ export const PoolList = ({
         const tokenA = pool.coinTypeA?.toLowerCase() || "";
         const tokenB = pool.coinTypeB?.toLowerCase() || "";
         const address = pool.poolAddress?.toLowerCase() || "";
-
         return (
           tokenA.includes(query) ||
           tokenB.includes(query) ||
@@ -71,14 +71,13 @@ export const PoolList = ({
       });
     }
 
-    // Sort pools based on sortBy
+    // Sort pools based on sortBy (using mock data for liquidity/volume)
     if (sortBy !== "default") {
       filtered = [...filtered].sort((a, b) => {
-        // In a real implementation, these would be actual pool metrics
-        const liquidityA = Math.random() * 1000000; // Mock data
-        const liquidityB = Math.random() * 1000000; // Mock data
-        const volumeA = Math.random() * 500000; // Mock data
-        const volumeB = Math.random() * 500000; // Mock data
+        const liquidityA = Math.random() * 1000000;
+        const liquidityB = Math.random() * 1000000;
+        const volumeA = Math.random() * 500000;
+        const volumeB = Math.random() * 500000;
 
         switch (sortBy) {
           case "liquidity_high":

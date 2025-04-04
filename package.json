@@ -12,7 +12,8 @@
   "dependencies": {
     "@suiet/wallet-kit": "^0.2.14",
     "apexcharts": "^4.0.0",
-    "@cetusprotocol/cetus-sui-clmm-sdk": "^2.2.0",
+    "@cetusprotocol/cetus-sui-clmm-sdk": "^5.3.4",
+    "@mysten/sui": "^1.26.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",

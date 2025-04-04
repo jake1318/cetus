@@ -1,5 +1,5 @@
-import { CetusClmmSDK } from "@cetusprotocol/cetus-sui-clmm-sdk";
-import { JsonRpcProvider } from "@mysten/sui/client";
+import { buildSdk, Sdk } from "@cetusprotocol/cetus-sui-clmm-sdk";
+import { JsonRpcProvider } from "@mysten/sui";
 
 // Network can be "mainnet", "testnet", or "devnet"
 const NETWORK = "mainnet";
@@ -18,8 +18,10 @@ const getRpcUrl = (network: string) => {
   }
 };
 
-// Create the provider
-const provider = new JsonRpcProvider(getRpcUrl(NETWORK));
+// Create the provider – note the updated configuration
+const provider = new JsonRpcProvider({
+  connection: { fullnode: getRpcUrl(NETWORK) },
+});
 
 // Package IDs for Cetus on mainnet
 const CETUS_CONFIG = {
@@ -34,11 +36,11 @@ const CETUS_CONFIG = {
   },
 };
 
-// Initialize the SDK
-export const initCetusSDK = () => {
-  return new CetusClmmSDK({
+// Initialize the SDK using buildSdk
+export const initCetusSDK = (): Sdk => {
+  const sdk: Sdk = buildSdk({
     network: NETWORK,
-    fullNode: getRpcUrl(NETWORK),
+    fullRpcUrl: getRpcUrl(NETWORK),
     faucet: "",
     simulationAccount: {
       address:
@@ -50,7 +52,9 @@ export const initCetusSDK = () => {
       poolAddress: CETUS_CONFIG.mainnet.poolAddress,
       launchpadPool: CETUS_CONFIG.mainnet.launchpadPool,
     },
+    provider, // Pass the Sui provider instance
   });
+  return sdk;
 };
 
 export const getSuiProvider = () => provider;

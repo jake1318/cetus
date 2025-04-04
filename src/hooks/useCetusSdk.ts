@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { CetusClmmSDK } from "@cetusprotocol/cetus-sui-clmm-sdk";
+import { Sdk } from "@cetusprotocol/cetus-sui-clmm-sdk";
 import { initCetusSDK } from "../utils/cetusSDKSetup";
 
 export const useCetusSdk = () => {
-  const [sdk, setSdk] = useState<CetusClmmSDK | null>(null);
+  const [sdk, setSdk] = useState<Sdk | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
