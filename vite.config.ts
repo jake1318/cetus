@@ -1,28 +1,12 @@
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  server: {
-    proxy: {
-      "/sui": {
-        target: "https://rpc.ankr.com/sui",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/sui/, ""),
-        configure: (proxy) => {
-          proxy.on("proxyReq", (proxyReq) => {
-            proxyReq.removeHeader("client-request-method");
-          });
-        },
-      },
-      "/api": {
-        target: "http://localhost:5000",
-        changeOrigin: true,
-      },
-    },
-  },
+  plugins: [react()],
   resolve: {
     alias: {
-      // Point explicitly to the ESM entry file. If your package provides index.mjs, use that.
+      // Map the package to its dist entry instead of the package root.
       "@mysten/sui": path.resolve(
         __dirname,
         "node_modules/@mysten/sui/dist/index.js"
@@ -31,5 +15,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ["@mysten/sui"],
+  },
+  ssr: {
+    // Exclude from SSR externalization to ensure the alias is used.
+    external: ["@mysten/sui"],
   },
 });
